@@ -12,19 +12,19 @@ export default function Pass({ type }) {
     const typeColumns = getTypeColumns(type);
     const columns = typeColumns.filter((column) => column.show);
     const navigate = useNavigate();
-    const [inputs, setInputs] = useState({});
+    const [values, setValues] = useState({});
 
     useEffect(() => {
-        if (columns.length > 0) {
-            const newInputs = {};
-            columns.forEach((column) => {
-                newInputs[column.key] = '';
-            });
-        }
-    }, [columns]);
+        // for each column, init value with default value
+        const newValues = {};
+        columns.forEach((column) => {
+            newValues[column.key] = column.defaultValue;
+        });
+        setValues(newValues);
+    }, []);
 
     const inputsElements = columns.map((column, index) => {
-        return <ColumnInput key={index} updateInputsFunction={updateInputs} column={column} />;
+        return <ColumnInput key={index} updateInputsFunction={updateInputs} column={column} value={values[column.key]} />;
     });
 
     return (
@@ -36,22 +36,22 @@ export default function Pass({ type }) {
     );
 
     function updateInputs(key, value) {
-        const newInputs = { ...inputs };
+        const newInputs = { ...values };
         newInputs[key] = value;
-        setInputs(newInputs);
+        setValues(newInputs);
     }
 
     async function saveButtonHandler() {
         if (deleteIsDisabled) return;
         setDeleteIsDisabled(true);
         try {
-            console.log(inputs);
-            await API.passes.create({ type, ...inputs });
-            setDeleteIsDisabled(false);
+            console.log('sending values to api', values);
+            const result = await API.passes.create({ ...values, type });
             navigate(`/${type}`);
         } catch (e) {
-            setDeleteIsDisabled(false);
             console.log('Error');
+            setDeleteIsDisabled(false);
         }
+        setDeleteIsDisabled(false);
     }
 }

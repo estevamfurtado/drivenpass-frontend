@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { Wrapper, InputWrapper, CheckBoxInput, SelectInput, TextInput, ErrorMessage } from './Styles';
 
-export default function ColumnInput({ column, updateInputsFunction }) {
+export default function ColumnInput({ column, value, updateInputsFunction }) {
     const { type, label, placeholder, key, config, joiSchema } = column;
-    const [inputValue, setInputValue] = useState(undefined);
+    const [inputValue, setInputValue] = useState(value);
     const [edited, setEdited] = useState(false);
     const errorMessage = joiSchema.validate(inputValue).error || null;
 
@@ -53,7 +53,7 @@ export default function ColumnInput({ column, updateInputsFunction }) {
     }
     function selectElementBuilder() {
         return (
-            <SelectInput name={key} onChange={onTextAndSelectChange}>
+            <SelectInput name={key} onChange={onTextAndSelectChange} value={inputValue}>
                 {config.options.map((option) => {
                     return (
                         <option key={option.value} value={option.value}>

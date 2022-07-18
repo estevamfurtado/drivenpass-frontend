@@ -11,12 +11,14 @@ export default function Pass({ type, pass }) {
 
     const navigate = useNavigate();
 
+    console.log(pass);
+
     const filteredData = columns.filter((column) => column.show && column.key !== 'title');
     const dataElement = filteredData.map(({ label, key }, index) => {
         return (
             <div key={index}>
                 <h3>{label}</h3>
-                <p>{pass[key] ? pass[key] : ''}</p>
+                <p>{String(pass[key])}</p>
             </div>
         );
     });
