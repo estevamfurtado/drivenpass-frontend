@@ -1,11 +1,12 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-    height: 100%;
     width: 100%;
+    height: 100%;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    overflow-y: hidden;
 `;
 
 const Top = styled.div`
@@ -20,6 +21,7 @@ const Top = styled.div`
 const Bottom = styled.main`
     width: 100%;
     flex: 1 1 auto;
+    overflow-y: hidden;
     display: flex;
     flex-direction: column;
     align-items: flex-start;

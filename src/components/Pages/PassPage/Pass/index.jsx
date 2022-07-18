@@ -11,7 +11,8 @@ export default function Pass({ type, pass }) {
 
     const navigate = useNavigate();
 
-    const dataElement = columns.map(({ label, key }, index) => {
+    const filteredData = columns.filter((column) => column.show && column.key !== 'title');
+    const dataElement = filteredData.map(({ label, key }, index) => {
         return (
             <div key={index}>
                 <h3>{label}</h3>

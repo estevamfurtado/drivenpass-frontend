@@ -1,12 +1,14 @@
 import styled from 'styled-components';
 
 const Wrapper = styled.section`
-    height: 100%;
     width: 100%;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     gap: 20px;
     align-items: flex-start;
+    overflow-y: hidden;
+    border: 2px solid white;
 `;
 
 const Button = styled.button`

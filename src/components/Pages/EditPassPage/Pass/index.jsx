@@ -3,13 +3,14 @@ import APIContext from '../../../../hooks/APIContext';
 import { Wrapper, DataWrapper, Button, Title } from './Styles';
 import { getTypeColumns } from '../../../../utils/types';
 import { useNavigate } from 'react-router-dom';
+import ColumnInput from './ColumnInput';
 
 export default function Pass({ type }) {
     const { API } = useContext(APIContext);
     const [deleteIsDisabled, setDeleteIsDisabled] = useState(false);
-    const titleColumn = { key: 'title', label: 'Title' };
+
     const typeColumns = getTypeColumns(type);
-    const columns = [titleColumn, ...typeColumns];
+    const columns = typeColumns.filter((column) => column.show);
     const navigate = useNavigate();
     const [inputs, setInputs] = useState({});
 
@@ -22,21 +23,8 @@ export default function Pass({ type }) {
         }
     }, [columns]);
 
-    const inputsElements = columns.map(({ label, key }, index) => {
-        return (
-            <div key={index}>
-                <label>{label}</label>
-                <input
-                    type='text'
-                    value={inputs[key]}
-                    onChange={(e) => {
-                        const newInputs = { ...inputs };
-                        newInputs[key] = e.target.value;
-                        setInputs(newInputs);
-                    }}
-                />
-            </div>
-        );
+    const inputsElements = columns.map((column, index) => {
+        return <ColumnInput key={index} updateInputsFunction={updateInputs} column={column} />;
     });
 
     return (
@@ -46,6 +34,12 @@ export default function Pass({ type }) {
             <Button onClick={saveButtonHandler}>Save</Button>
         </Wrapper>
     );
+
+    function updateInputs(key, value) {
+        const newInputs = { ...inputs };
+        newInputs[key] = value;
+        setInputs(newInputs);
+    }
 
     async function saveButtonHandler() {
         if (deleteIsDisabled) return;

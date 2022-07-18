@@ -12,8 +12,17 @@ const DataWrapper = styled.div`
     width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 20px;
     align-items: flex-start;
+
+    h3 {
+        color: #aaa;
+        font-size: 14px;
+        font-weight: normal;
+        margin-bottom: 10px;
+    }
+
+    margin-bottom: 30px;
 `;
 
 const Button = styled.button`
@@ -22,7 +31,7 @@ const Button = styled.button`
 `;
 
 const Title = styled.h2`
-    font-size: 1.5rem;
+    font-size: 24px;
 `;
 
 export { Wrapper, DataWrapper, Button, Title };
